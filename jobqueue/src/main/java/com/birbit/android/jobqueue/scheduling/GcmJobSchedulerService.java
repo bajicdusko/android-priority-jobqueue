@@ -3,7 +3,6 @@ package com.birbit.android.jobqueue.scheduling;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.log.JqLog;
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -11,6 +10,8 @@ import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
 
 abstract public class GcmJobSchedulerService extends GcmTaskService {
+    protected static Context appContext;
+
     /**
      * Creates a scheduler for the given service.
      * Keep in mind that there is a strict 1-1 mapping between the created scheduler and the
@@ -24,6 +25,7 @@ abstract public class GcmJobSchedulerService extends GcmTaskService {
     @SuppressWarnings("unused")
     public static GcmScheduler createSchedulerFor(Context appContext,
                                                   Class<? extends GcmJobSchedulerService> klass) {
+        GcmJobSchedulerService.appContext = appContext;
         if (GcmJobSchedulerService.class == klass) {
             throw new IllegalArgumentException("You must create a service that extends" +
                     " GcmJobSchedulerService");
